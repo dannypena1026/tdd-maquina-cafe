@@ -1,0 +1,52 @@
+name: CI Pipeline
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Compilar y ejecutar pruebas TDD
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v6
+
+      - name: Configurar Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Compilar y ejecutar pruebas
+        run: mvn -B --no-transfer-progress clean verify
+
+  entrega:
+    name: Generar artefacto de entrega
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v6
+
+      - name: Configurar Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Empaquetar aplicación
+        run: mvn -B --no-transfer-progress -DskipTests package
+
+      - name: Publicar JAR como artefacto del workflow
+        uses: actions/upload-artifact@v4
+        with:
+          name: maquina-cafe-jar
+          path: target/tdd-maquina-cafe-1.0.0.jar
+          if-no-files-found: error

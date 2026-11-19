@@ -1,0 +1,14 @@
+# Compilaciones y reportes Maven
+target/
+
+# Ajustes de editores
+.idea/
+.vscode/
+*.iml
+.classpath
+.project
+.settings/
+
+# Archivos locales
+.DS_Store
+Thumbs.db
