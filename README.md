@@ -64,3 +64,4 @@ La última fase es una **entrega automatizada del artefacto**, no un despliegue 
 ## Resultado esperado
 
 En la pestaña **Actions** de GitHub debe aparecer una ejecución de **CI Pipeline** en verde, con los trabajos `Compilar y ejecutar pruebas TDD` y, para cambios integrados a `main`, `Generar artefacto de entrega`.
+Integracion continua con GitHub Actions
